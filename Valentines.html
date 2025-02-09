@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valentine's Day - Our Memories</title>
+    <style>
+        body {
+            font-family: 'Great Vibes', cursive;
+            background: url('couple-background.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: white;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+        header {
+            padding: 50px 20px;
+            background: rgba(0, 0, 0, 0.5);
+        }
+        h1 {
+            font-size: 4rem;
+            margin: 0;
+        }
+        .container {
+            padding: 20px;
+        }
+        .gallery {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        .gallery img {
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+            transition: transform 0.3s ease;
+        }
+        .gallery img:hover {
+            transform: scale(1.1);
+        }
+        .message {
+            font-size: 2rem;
+            margin: 40px 20px;
+            line-height: 1.6;
+        }
+        .love-letter {
+            display: none;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 10px;
+            margin: 40px auto;
+            max-width: 800px;
+        }
+        .love-letter p {
+            font-size: 1.5rem;
+            line-height: 1.8;
+        }
+        .button {
+            background: #ff7eb9;
+            color: white;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        .button:hover {
+            background: #ff758c;
+        }
+        footer {
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.5);
+            margin-top: 40px;
+        }
+        footer p {
+            margin: 0;
+            font-size: 1.2rem;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <h1>Happy Valentine's Day, My Love!</h1>
+    </header>
+    <div class="container">
+        <div class="message">
+            <p>To the one who fills my heart with joy,</p>
+            <p>Every moment with you is a treasure. Here are some of our favorite memories together. I love you more than words can express.</p>
+            <p>Forever yours,</p>
+            <p>[Your Name]</p>
+        </div>
+        <div class="gallery">
+            <img src="memory1.jpg" alt="Memory 1">
+            <img src="memory2.jpg" alt="Memory 2">
+            <img src="memory3.jpg" alt="Memory 3">
+            <img src="memory4.jpg" alt="Memory 4">
+            <img src="memory5.jpg" alt="Memory 5">
+            <img src="memory6.jpg" alt="Memory 6">
+        </div>
+        <button class="button" onclick="showLoveLetter()">Read My Love Letter</button>
+        <div id="loveLetter" class="love-letter">
+            <h2>My Dearest [Partner's Name],</h2>
+            <p>
+                From the moment we met, my life has been filled with endless joy and love. You are my everything, and I cherish every moment we spend together. 
+                Your smile lights up my world, and your love gives me strength. I am so grateful to have you in my life.
+            </p>
+            <p>
+                On this special day, I want you to know that my love for you grows stronger with each passing day. You are my soulmate, my best friend, and my forever love.
+                I look forward to creating many more beautiful memories with you.
+            </p>
+            <p>With all my love,</p>
+            <p>[Your Name]</p>
+        </div>
+    </div>
+    <footer>
+        <p>Created with love for my Valentine ❤️</p>
+    </footer>
+
+    <script>
+        function showLoveLetter() {
+            const loveLetter = document.getElementById('loveLetter');
+            loveLetter.style.display = 'block';
+            document.querySelector('.button').style.display = 'none'; // Hide the button after clicking
+        }
+    </script>
+</body>
+</html>
