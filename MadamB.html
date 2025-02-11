@@ -16,7 +16,6 @@
             margin: 0;
             padding: 0;
             overflow-x: hidden;
-            position: relative;
         }
 
         header {
@@ -33,17 +32,6 @@
 
         .container {
             padding: 20px;
-        }
-
-        .time-together {
-            font-size: 2rem;
-            margin: 20px 0;
-            background: rgba(0, 0, 0, 0.5);
-            padding: 20px;
-            border-radius: 10px;
-            display: inline-block;
-            color: #ffcc00;
-            text-shadow: 2px 2px 5px black;
         }
 
         .folders {
@@ -88,6 +76,7 @@
             transform: scale(1.1);
         }
 
+        /* Full-Screen Popup */
         .popup {
             display: none;
             position: fixed;
@@ -95,48 +84,28 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.8);
+            background: rgba(0, 0, 0, 0.9);
             justify-content: center;
             align-items: center;
             z-index: 1000;
         }
 
         .popup img {
-            max-width: 90%;
-            max-height: 90%;
-            border-radius: 10px;
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
         }
 
         .close {
             position: absolute;
             top: 20px;
             right: 20px;
-            font-size: 2rem;
+            font-size: 3rem;
             color: white;
             cursor: pointer;
-        }
-
-        /* Floating Hearts & Stars */
-        .floating-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 1;
-        }
-
-        .floating {
-            position: absolute;
-            font-size: 20px;
-            animation: floatUp 5s infinite linear;
-            opacity: 0.8;
-        }
-
-        @keyframes floatUp {
-            0% { transform: translateY(100vh) scale(1); opacity: 1; }
-            100% { transform: translateY(-10vh) scale(0.5); opacity: 0; }
+            background: rgba(255, 255, 255, 0.3);
+            padding: 10px;
+            border-radius: 50%;
         }
 
         footer {
@@ -150,78 +119,52 @@
     <header>
         <h1>Happy Valentine's Day, My Love!</h1>
     </header>
-    
-    <div class="floating-container" id="floatingContainer"></div>
 
     <div class="container">
-        <div class="time-together">
-            <p>We have been together for:</p>
-            <p id="timeTogether">Loading...</p>
-        </div>
-
         <div class="folders">
             <div class="folder" onclick="openFolder('2021')"><h2>2021</h2></div>
             <div class="folder" onclick="openFolder('2022')"><h2>2022</h2></div>
             <div class="folder" onclick="openFolder('2023')"><h2>2023</h2></div>
-            <div class="folder" onclick="openFolder('2024')"><h2>2024</h2></div>
-            <div class="folder" onclick="openFolder('2025')"><h2>2025</h2></div>
         </div>
 
-        <!-- Placeholder for Galleries -->
+        <!-- Galleries -->
         <div id="gallery2021" class="gallery">
-            <img src="2021-1.jpg" alt="Memory 1">
-            <img src="2021-2.jpg" alt="Memory 2">
+            <img src="2021-1.jpg" alt="Memory 1" onclick="openPopup(this.src)">
+            <img src="2021-2.jpg" alt="Memory 2" onclick="openPopup(this.src)">
         </div>
         <div id="gallery2022" class="gallery">
-            <img src="2022-1.jpg" alt="Memory 1">
-            <img src="2022-2.jpg" alt="Memory 2">
-        </div>
-
-        <button class="button" onclick="showLoveLetter()">Read My Love Letter</button>
-
-        <div id="loveLetter" class="love-letter" style="display:none;">
-            <h2>My Dearest Love,</h2>
-            <p>Every day with you is a beautiful adventure. I cherish every moment and look forward to creating many more memories together. I love you forever!</p>
-            <p>With all my love,</p>
-            <p>Your Valentine</p>
+            <img src="2022-1.jpg" alt="Memory 1" onclick="openPopup(this.src)">
+            <img src="2022-2.jpg" alt="Memory 2" onclick="openPopup(this.src)">
         </div>
     </div>
 
-    <script>
-        // Update Relationship Duration
-        const startDate = new Date(2022, 3, 14);
-        function updateTimeTogether() {
-            const now = new Date();
-            const diff = now - startDate;
-            const years = Math.floor(diff / (1000 * 60 * 60 * 24 * 365));
-            const months = Math.floor((diff % (1000 * 60 * 60 * 24 * 365)) / (1000 * 60 * 60 * 24 * 30));
-            const days = Math.floor((diff % (1000 * 60 * 60 * 24 * 30)) / (1000 * 60 * 60 * 24));
-            document.getElementById('timeTogether').innerHTML = `${years} years, ${months} months, ${days} days`;
-        }
-        setInterval(updateTimeTogether, 1000);
-        updateTimeTogether();
+    <!-- Full-Screen Popup -->
+    <div id="popup" class="popup" onclick="closePopup()">
+        <span class="close" onclick="closePopup()">&times;</span>
+        <img id="popupImg" src="" alt="Popup Image">
+    </div>
 
+    <script>
         function openFolder(year) {
             document.querySelectorAll('.gallery').forEach(gallery => gallery.style.display = 'none');
             document.getElementById(`gallery${year}`).style.display = 'flex';
         }
 
-        function showLoveLetter() {
-            document.getElementById('loveLetter').style.display = 'block';
+        function openPopup(src) {
+            document.getElementById('popupImg').src = src;
+            document.getElementById('popup').style.display = 'flex';
         }
 
-        function createFloatingElements() {
-            const container = document.getElementById('floatingContainer');
-            for (let i = 0; i < 50; i++) {
-                const element = document.createElement('div');
-                element.className = 'floating';
-                element.innerHTML = Math.random() > 0.5 ? '💖' : '✨';
-                element.style.left = `${Math.random() * 100}vw`;
-                element.style.animationDuration = `${Math.random() * 3 + 3}s`;
-                container.appendChild(element);
-            }
+        function closePopup() {
+            document.getElementById('popup').style.display = 'none';
         }
-        createFloatingElements();
+
+        // Close popup when pressing ESC
+        document.addEventListener("keydown", function(event) {
+            if (event.key === "Escape") {
+                closePopup();
+            }
+        });
     </script>
 </body>
 </html>
