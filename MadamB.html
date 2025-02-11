@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Valentine's Day - Our Memories</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+
         body {
             font-family: 'Pacifico', cursive;
             background: url('couple-background.jpg') no-repeat center center fixed;
@@ -16,34 +18,23 @@
             overflow-x: hidden;
             position: relative;
         }
+
         header {
             padding: 50px 20px;
             background: rgba(0, 0, 0, 0.5);
         }
+
         header h1 {
             font-size: 4rem;
             margin: 0;
-            color: #ff7eb9; /* Light pink */
-            text-shadow: 
-                -1px -1px 0 #000,  
-                 1px -1px 0 #000,
-                -1px  1px 0 #000,
-                 1px  1px 0 #000; /* Outline effect */
+            color: #ff7eb9;
+            text-shadow: 2px 2px 5px black;
         }
+
         .container {
             padding: 20px;
         }
-        .message {
-            font-size: 2rem;
-            margin: 40px 20px;
-            line-height: 1.6;
-            color: #ffffff; /* White */
-            text-shadow: 
-                -1px -1px 0 #000,  
-                 1px -1px 0 #000,
-                -1px  1px 0 #000,
-                 1px  1px 0 #000; /* Outline effect */
-        }
+
         .time-together {
             font-size: 2rem;
             margin: 20px 0;
@@ -51,14 +42,82 @@
             padding: 20px;
             border-radius: 10px;
             display: inline-block;
-            color: #ffcc00; /* Gold */
-            text-shadow: 
-                -1px -1px 0 #000,  
-                 1px -1px 0 #000,
-                -1px  1px 0 #000,
-                 1px  1px 0 #000; /* Outline effect */
+            color: #ffcc00;
+            text-shadow: 2px 2px 5px black;
         }
-        .stars {
+
+        .folders {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 40px;
+        }
+
+        .folder {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.3s ease, background 0.3s ease;
+        }
+
+        .folder:hover {
+            transform: scale(1.1);
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .gallery {
+            display: none;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .gallery img {
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+
+        .gallery img:hover {
+            transform: scale(1.1);
+        }
+
+        .popup {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .popup img {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 10px;
+        }
+
+        .close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 2rem;
+            color: white;
+            cursor: pointer;
+        }
+
+        /* Floating Hearts & Stars */
+        .floating-container {
             position: fixed;
             top: 0;
             left: 0;
@@ -67,140 +126,110 @@
             pointer-events: none;
             z-index: 1;
         }
-        .star {
+
+        .floating {
             position: absolute;
-            color: #ffd700; /* Gold color */
-            font-size: 15px;
-            opacity: 0;
-            animation: floatStars linear infinite;
+            font-size: 20px;
+            animation: floatUp 5s infinite linear;
+            opacity: 0.8;
         }
-        @keyframes floatStars {
-            0% {
-                transform: translateY(100vh);
-                opacity: 0;
-            }
-            30% {
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(-10vh);
-                opacity: 0;
-            }
+
+        @keyframes floatUp {
+            0% { transform: translateY(100vh) scale(1); opacity: 1; }
+            100% { transform: translateY(-10vh) scale(0.5); opacity: 0; }
         }
-        .button {
-            background: #ff7eb9;
-            color: white;
-            padding: 15px 30px;
-            font-size: 1.2rem;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background 0.3s ease;
-            text-shadow: 
-                -1px -1px 0 #000,  
-                 1px -1px 0 #000,
-                -1px  1px 0 #000,
-                 1px  1px 0 #000; /* Outline effect */
-        }
-        .button:hover {
-            background: #ff758c;
-        }
+
         footer {
             padding: 20px;
             background: rgba(0, 0, 0, 0.5);
             margin-top: 40px;
         }
-        footer p {
-            margin: 0;
-            font-size: 1.2rem;
-            color: #ffcc00; /* Gold */
-            text-shadow: 
-                -1px -1px 0 #000,  
-                 1px -1px 0 #000,
-                -1px  1px 0 #000,
-                 1px  1px 0 #000; /* Outline effect */
-        }
     </style>
-    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
 </head>
 <body>
     <header>
         <h1>Happy Valentine's Day, My Love!</h1>
     </header>
+    
+    <div class="floating-container" id="floatingContainer"></div>
+
     <div class="container">
         <div class="time-together">
             <p>We have been together for:</p>
             <p id="timeTogether">Loading...</p>
         </div>
-        <div class="message">
-            <p>To the one who fills my heart with joy,</p>
-            <p>Every moment with you is a treasure. I love you more than words can express.</p>
-            <p>Forever yours,</p>
-            <p>Boss B.</p>
+
+        <div class="folders">
+            <div class="folder" onclick="openFolder('2021')"><h2>2021</h2></div>
+            <div class="folder" onclick="openFolder('2022')"><h2>2022</h2></div>
+            <div class="folder" onclick="openFolder('2023')"><h2>2023</h2></div>
+            <div class="folder" onclick="openFolder('2024')"><h2>2024</h2></div>
+            <div class="folder" onclick="openFolder('2025')"><h2>2025</h2></div>
         </div>
+
+        <!-- Placeholder for Galleries -->
+        <div id="gallery2021" class="gallery">
+            <img src="2021-1.png" alt="Memory 1">
+            <img src="2021-2.png" alt="Memory 2">
+            <img src="2021-3.png" alt="Memory 3">
+            <img src="2021-4.png" alt="Memory 4">
+            <img src="2021-5.png" alt="Memory 5">
+            <img src="2021-6.jpeg" alt="Memory 6">
+            <img src="2021-7.png" alt="Memory 7">
+            <img src="2021-8.png" alt="Memory 8">
+            <img src="2021-9.png" alt="Memory 9">
+            <img src="2021-10.jpg" alt="Memory 10">
+        </div>
+        <div id="gallery2022" class="gallery">
+            <img src="2022-1.jpg" alt="Memory 1">
+            <img src="2022-2.jpg" alt="Memory 2">
+        </div>
+
         <button class="button" onclick="showLoveLetter()">Read My Love Letter</button>
-        <div id="loveLetter" class="love-letter" style="display: none;">
-            <h2>My Dearest Madam B.,</h2>
-            <p>
-                From the moment we met, my life has been filled with endless joy and love. 
-                Your smile lights up my world, and your love gives me strength.
-            </p>
-            <p>
-                On this special day, I want you to know that my love for you grows stronger with each passing day.
-            </p>
+
+        <div id="loveLetter" class="love-letter" style="display:none;">
+            <h2>My Dearest Love,</h2>
+            <p>Every day with you is a beautiful adventure. I cherish every moment and look forward to creating many more memories together. I love you forever!</p>
             <p>With all my love,</p>
-            <p>Boss B.</p>
+            <p>Your Valentine</p>
         </div>
     </div>
 
-    <div id="stars" class="stars"></div>
-
-    <footer>
-        <p>Created with love for my Valentine ❤️</p>
-    </footer>
-
     <script>
-        // Set the start date of your relationship (April 14, 2022)
-        const startDate = new Date(2022, 3, 14); // Months are 0-indexed
-
+        // Update Relationship Duration
+        const startDate = new Date(2022, 3, 14);
         function updateTimeTogether() {
             const now = new Date();
             const diff = now - startDate;
-
             const years = Math.floor(diff / (1000 * 60 * 60 * 24 * 365));
             const months = Math.floor((diff % (1000 * 60 * 60 * 24 * 365)) / (1000 * 60 * 60 * 24 * 30));
             const days = Math.floor((diff % (1000 * 60 * 60 * 24 * 30)) / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-
-            document.getElementById('timeTogether').innerHTML = `
-                ${years} years, ${months} months, ${days} days,<br>
-                ${hours} hours, ${minutes} minutes, ${seconds} seconds
-            `;
+            document.getElementById('timeTogether').innerHTML = `${years} years, ${months} months, ${days} days`;
         }
-
         setInterval(updateTimeTogether, 1000);
         updateTimeTogether();
 
-        function showLoveLetter() {
-            document.getElementById('loveLetter').style.display = 'block';
-            document.querySelector('.button').style.display = 'none';
+        function openFolder(year) {
+            document.querySelectorAll('.gallery').forEach(gallery => gallery.style.display = 'none');
+            document.getElementById(`gallery${year}`).style.display = 'flex';
         }
 
-        function createStars() {
-            const starsContainer = document.getElementById('stars');
-            for (let i = 0; i < 30; i++) {
-                const star = document.createElement('div');
-                star.className = 'star';
-                star.innerHTML = '⭐';
-                star.style.left = `${Math.random() * 100}vw`;
-                star.style.animationDuration = `${Math.random() * 3 + 2}s`;
-                star.style.fontSize = `${Math.random() * 20 + 10}px`;
-                starsContainer.appendChild(star);
+        function showLoveLetter() {
+            document.getElementById('loveLetter').style.display = 'block';
+        }
+
+        function createFloatingElements() {
+            const container = document.getElementById('floatingContainer');
+            for (let i = 0; i < 50; i++) {
+                const element = document.createElement('div');
+                element.className = 'floating';
+                element.innerHTML = Math.random() > 0.5 ? '💖' : '✨';
+                element.style.left = `${Math.random() * 100}vw`;
+                element.style.animationDuration = `${Math.random() * 3 + 3}s`;
+                container.appendChild(element);
             }
         }
-        createStars();
+        createFloatingElements();
     </script>
 </body>
 </html>
