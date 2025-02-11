@@ -14,6 +14,7 @@
             margin: 0;
             padding: 0;
             overflow-x: hidden;
+            position: relative;
         }
         header {
             padding: 50px 20px;
@@ -98,10 +99,73 @@
             object-fit: cover;
             border-radius: 10px;
             transition: transform 0.3s ease;
+            cursor: pointer;
         }
         .gallery img:hover {
             transform: scale(1.1);
         }
+        .popup {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .popup img {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 10px;
+        }
+        .close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 2rem;
+            color: white;
+            cursor: pointer;
+        }
+        .hearts {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+        .heart {
+            position: absolute;
+            color: #ff7eb9;
+            font-size: 20px;
+            animation: float 5s infinite ease-in-out;
+        }
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0);}
+            50% {transform: translateY(-20px) rotate(20deg);}
+            100% {transtorm: translateY(0)rotate(0);}
+        }
+        .glitter {
+            position: fixed;
+            top: 0%;
+            left: 0%;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index:  2;
+            background: radial-gradiant(heart,transparent 20%,#fff 20%,transparent 30%);
+            background-size: 10px 10px;
+            animation: glitter 5s infinite;
+        }
+        @keyframes glitter {
+            0% {background-position: 0 0;}
+            100% {background-position: 100px 100px; }
+        }
+
         .love-letter {
             display: none;
             padding: 20px;
@@ -278,6 +342,15 @@
             <p>Boss B.</p>
         </div>
     </div>
+
+    <div id="popup" class="popup">
+        <span class="close" onclick="closePopup()">&times;</span>
+        <img id="popupImage" src="" alt="Popup Image">
+    </div>
+
+</div class="hearts" id="hearts"></div>
+
+</div class="glitter"></div>
     <footer>
         <p>Created with love for my Valentine ❤️</p>
     </footer>
@@ -318,6 +391,25 @@
             loveLetter.style.display = 'block';
             document.querySelector('.button').style.display = 'none'; // Hide the button after clicking
         }
+
+        function openPopup(imageSrc) {
+            const popup=document.getElementById('popup');
+            const popupImage = document.getElementById ('popupImage');
+            popupImage.src = imageSrc;
+            popup.style.display = 'flex';
+        }
+        function closePopup() {
+            const heartsContainer = document.getElementById ('hearts');
+            for (let i=0;i<20;i++) {
+                const heart = document.createElement('div');
+                heart.className = 'heart';
+                heart.innerHTML = '💖';
+                heart.style.left='${Math.random() *100}vw';
+                heart.style.animationDuration = '${Math.random()*3+2}s';
+                heartsContainer.appendChild(heart); 
+            }
+        }
+        createHearts();
     </script>
 </body>
 </html>
